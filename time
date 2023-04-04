@@ -1,0 +1,77 @@
+Time taken by  selection Sort for 100000 elements: 11396 milliseconds
+Time taken by Insertion Sort for 100000 elements: 5861 milliseconds
+Time taken by Bubble Sort for 100000 elements: 157040 milliseconds
+---------------------------------------------------------------------------
+Time taken by insertion Sort for 1000 elements: 0 milliseconds
+Time taken by selection sort for 1000 elements: 1 milliseconds
+Time taken by  Bubble Sort for 1000 elements: 16 milliseconds
+----------------------------------------------------------------------------
+Time taken by  insertion Sort for 10000 elements: 59 milliseconds
+Time taken by  selection sort for 10000 elements: 117 milliseconds
+Time taken by Bubble Sort for 10000 elements: 1742 milliseconds
+-----------------------------------------------------------------------------
+#include <iostream>
+#include <chrono>
+using namespace std;
+void insertionSort(int arr[], int n) {
+    int i, key, j;
+    for (i = 1; i < n; i++) {
+        key = arr[i];
+        j = i - 1;
+
+        while (j >= 0 && arr[j] > key) {
+            arr[j + 1] = arr[j];
+            j = j - 1;
+        }
+        arr[j + 1] = key;
+    }
+}
+void selectionsort(int arr[], int n)
+{
+    int MinIdx;
+    //0  1  2  3  4  5
+    for (int i = 0; i < n - 1; i++)//60 40 50 30 10 20
+    {
+        MinIdx = i;
+
+        for (int j = i + 1; j < n; j++)
+            if (arr[j] < arr[MinIdx])
+                MinIdx = j;
+        swap(arr[MinIdx], arr[i]);
+
+    }
+}
+void BubbleSort(int arr[], int size)
+{
+    for (int i = 0; i < size - 1; i++)//pass
+    {
+        for (int j = 0; j < size - i - 1; j++)
+        {
+            if (arr[j] > arr[j + 1])
+            {
+                swap(arr[j], arr[j + 1]);
+            }
+        }
+    }
+}
+int main() {
+    const int SIZE = 10000;
+    int arr[SIZE];
+    for (int i = 0; i < SIZE; i++) {
+        arr[i] = rand() % SIZE;
+    }
+    // get the start time
+    auto start = chrono::steady_clock::now();
+    // perform the sort
+    BubbleSort(arr, SIZE);
+    // get the end time
+    auto end = chrono::steady_clock::now();
+    // calculate the elapsed time in milliseconds
+    auto elapsed = chrono::duration_cast<chrono::milliseconds>(end - start).count();
+    cout << "Time taken by Bubble Sort for " << SIZE << " elements: " << elapsed << " milliseconds" << endl;
+    return 0;
+}
+
+
+
+
